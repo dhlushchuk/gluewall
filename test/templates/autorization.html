@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Titillium+Web|Ubuntu&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/31b5eaa97f.js" crossorigin="anonymous"></script>
+    <link href="../static/header.css" rel="stylesheet">
+    <link href="../static/main.css" rel="stylesheet">
+    <link href="../static/autorization.css" rel="stylesheet">
+    <link href="../static/footer.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <i class="fa fa-bars" id="menu" aria-hidden="true"></i>
+</header>
+<div class="sidebar" id="left-sidebar">     
+    <ul>
+        <li><a href="main-page.html">На главную</a></li>
+        <li><a href="registration.html">Регистрация</a></li>
+        <li><a href="#">Новости</a></li>
+        <li><a href="#">Услуги</a></li>
+        <li><a href="#">О нас</a></li>
+    </ul>
+</div>
+<main><br>
+    <form action="page.html" onsubmit="return autorization()" method="POST">
+        <h2>Авторизация</h2>
+        <div class="error" id="error-message">Неправильный email или пароль!</div>
+        <label><input minlength="5" maxlength="30" class="inputs-log" placeholder="email" type="text" name="username" id="email-sign" autocomplete="off" required></label>
+        <label><input minlength="4" maxlength="40" class="inputs-log" placeholder="Пароль" type="password" name="password" id="password-sign" required></label>
+        <button id="button-login">Войти</button>
+    </form>
+</main>
+<footer>
+    <hr><br><p>2020</p>
+</footer>
+<script type="text/javascript" src="../static/autorization.js"></script>
+<script type="text/javascript" src="../static/sidebar.js"></script>
+<script type="text/javascript" src="../static/check-color.js"></script>
+</body>
+</html>

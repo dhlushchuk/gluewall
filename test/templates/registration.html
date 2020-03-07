@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Titillium+Web|Ubuntu&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/31b5eaa97f.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="../static/header.css" rel="stylesheet">
+    <link href="../static/main.css" rel="stylesheet">
+    <link href="../static/registration.css" rel="stylesheet">
+    <link href="../static/footer.css" rel="stylesheet">
+</head>
+<body>
+<header>
+    <i class="fa fa-bars" id="menu" aria-hidden="true"></i>
+</header>
+<div class="sidebar" id="left-sidebar">     
+    <ul>
+        <li><a href="main-page.html">На главную</a></li>
+        <li><a href="autorization.html" id="signification">Войти</a></li>
+        <li><a href="#">Новости</a></li>
+        <li><a href="#">Услуги</a></li>
+        <li><a href="#">О нас</a></li>
+    </ul>
+</div>
+<main>
+    <form action="page.html" onsubmit="return registration()" method="POST">
+        <div class="error" id='err-message'>Введены некорректные данные!</div>
+        <p>Почта: <input id="email" minlength="5" maxlength="30" class="inputs" type="email" autocomplete="off" required></p>
+        <p>Имя: <input id="username" minlength="1" maxlength="15" class="inputs" type="text" required autocomplete="off" required></p>
+        <p>Фамилия: <input id="lastname" minlength="1" maxlength="15" class="inputs" type="text"  required autocomplete="off" required></p>
+        <p>Дата рождения: 
+            <div class="date"><select class="date-margin" id="date-day" required>
+                <option>День</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option>
+                <option>8</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option>
+                <option>16</option><option>17</option><option>18</option><option>19</option><option>20</option><option>21</option><option>22</option><option>23</option>
+                <option>24</option><option>25</option><option>26</option><option>27</option><option>28</option><option>29</option><option>30</option><option>31</option>
+            </select>
+            <select class="date-margin" id="date-month" required>
+                <option>Месяц</option><option>Января</option><option>Февраля</option><option>Марта</option><option>Апреля</option><option>Мая</option>
+                <option>Июня</option><option>Июля</option><option>Августа</option><option>Сентября</option><option>Октября</option><option>Ноября</option><option>Декабря</option>
+            </select>
+            <select id="date-year" required>
+                <option>Год</option><option>1994</option><option>1995</option><option>1996</option><option>1997</option><option>1998</option><option>1999</option>
+                <option>2000</option><option>2001</option><option>2002</option><option>2003</option><option>2004</option><option>2005</option>
+            </select>
+            </div>
+        </p>
+        <p>Пароль: <input minlength="4" maxlength="40" class="inputs" type="password" required id="password"></p>
+        <button id="button-reg">Зарегестрироваться</button>
+    </form>
+</main>
+<footer>
+    <hr><br><p>2020</p>
+</footer>
+<script type="text/javascript" src="../static/registration.js"></script>
+<script type="text/javascript" src="../static/sidebar.js"></script>
+<script type="text/javascript" src="../static/check-autorization.js"></script>
+<script type="text/javascript" src="../static/check-color.js"></script>
+</body>
+</html>

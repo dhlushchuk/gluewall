@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Titillium+Web|Ubuntu&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/31b5eaa97f.js" crossorigin="anonymous"></script>
+    <link href="../static/header.css" rel="stylesheet">
+    <link href="../static/main.css" rel="stylesheet">
+    <link href="../static/page.css" rel="stylesheet">
+    <link href="../static/footer.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+            <i class="fa fa-bars" id="menu" aria-hidden="true"></i>
+    </header>
+    <aside class="sidebar" id="left-sidebar">
+        <ul>
+            <li><a href="main-page.html">На главную</a></li>
+            <li><a href="#">Новости</a></li>
+            <li><a href="#">Услуги</a></li>
+            <li><a href="#">О нас</a></li>
+            <li><a href="main-page.html" id="logout">Выйти</a></li>
+        </ul>
+        <div class="palette">
+            <div class="colors lightgreen" onclick="changeColor('lightgreen')"></div>
+            <div class="colors purple" onclick="changeColor('purple')"></div>
+            <div class="colors dark" onclick="changeColor('dark')"></div>
+            <div class="colors default" onclick="changeColor('default')"></div>
+        </div>
+    </aside>
+    <main>
+        <div class="username-edit">
+            <p id="username"></p>
+            <button class="button-edit-name" id="buttonEdit">Редактировать</button>
+        </div>
+        <div class="username-save">
+            <form action="page.html" method="POST">
+                <input id="firstname" minlength="1" maxlength="15" class="inputs" type="text" placeholder="Имя" autocomplete="off" required>
+                <input id="lastname" minlength="1" maxlength="15" class="inputs" type="text" placeholder="Фамилия" autocomplete="off" required>
+                <input type="submit" class="button-edit-name" id="buttonSave" value="Сохранить">
+            </form>
+        </div>
+        <p id="birthday-date"></p>
+        <p id="registration-date"></p>
+    </main>
+    <footer>
+        <hr><br><p>2020</p>
+    </footer>
+    <script type="text/javascript" src="../static/page.js"></script>
+    <script type="text/javascript" src="../static/check-color.js"></script>
+    <script type="text/javascript" src="../static/sidebar.js"></script>
+</body>
+</html>
