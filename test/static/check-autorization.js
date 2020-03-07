@@ -1,9 +1,0 @@
-const checkAutorization = () => {
-    if(localStorage.sign == 'true'){
-        document.getElementById("signification").href = '../templates/page.html'
-    }
-    else {
-        document.getElementById("signification").href = '../templates/autorization.html'
-    }
-}
-signification.onclick = checkAutorization
