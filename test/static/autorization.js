@@ -1,7 +1,7 @@
 let autorization = () => {
     let user = JSON.parse(localStorage.getItem('user'))
     if(document.getElementById("email-sign").value == user.email && document.getElementById("password-sign").value == user.password){
-        localStorage.sign = "true"
+        localStorage.setItem('sign', "true")
         return true
     }
     else {
