@@ -26,7 +26,7 @@ const signout = () => {
     user.background = "default"
     localStorage.setItem('user', JSON.stringify(user))
 }
-logout.onclick = signout
+logout.addEventListener("click", signout)
 const getRegistrationDate = (date) => {
     return (new Date().getDate()) - (new Date(date).getDate())
 }
