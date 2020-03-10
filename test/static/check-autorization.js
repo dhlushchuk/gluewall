@@ -1,5 +1,5 @@
 const checkAutorization = () => {
-    if(localStorage.sign == 'true'){
+    if(localStorage.getItem('sign') == 'true'){
         document.getElementById("signification").href = '../templates/page.html'
     }
     else {
