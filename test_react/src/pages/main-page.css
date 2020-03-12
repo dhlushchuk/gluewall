@@ -1,0 +1,8 @@
+.mainPage-main p {
+    width: 600px;
+    padding: 30px 20px;
+    margin: 10% auto;
+    background-color: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+}
