@@ -9,27 +9,31 @@ import Registration from './pages/registration'
 import Authorization from './pages/authorization'
 import Page from './pages/page'
 import './App.css'
+const user = JSON.parse(localStorage.getItem('user'))
+const background = document.getElementsByTagName('body')[0] 
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
       isShowedSidebar: false,
-      isPageOnload: false
+      isPageOnload: false,
+      backgroundTheme: ""
     }
     this.changeColor = this.changeColor.bind(this)
     this.showSidebar = this.showSidebar.bind(this)
     this.pageOnload = this.pageOnload.bind(this)
   }
   changeColor = (e) => {
-    document.getElementsByTagName('body')[0].style.backgroundColor = `${e.target.style.backgroundColor}`
-    let user = JSON.parse(localStorage.getItem('user'))
+    background.style.backgroundColor = `${e.target.style.backgroundColor}`
     user.background = `${e.target.style.backgroundColor}`
-    localStorage.setItem('user', JSON.stringify(user))  
+    localStorage.setItem('user', JSON.stringify(user))
+  }
+  componentWillMount() {
+    user.signIn === "true" ? this.setState({backgroundTheme: user.background}) : this.setState({backgroundTheme: ""})
   }
   componentDidMount(){
-    let user = JSON.parse(localStorage.getItem('user'))
-    document.getElementsByTagName('body')[0].style.backgroundColor = user.background
+    background.style.backgroundColor = this.state.backgroundTheme
   }
   showSidebar = () => {
     this.state.isShowedSidebar ? this.setState({isShowedSidebar: false}) : this.setState({isShowedSidebar: true})
@@ -45,7 +49,7 @@ class App extends Component {
       <div>
         <Header showSidebar = {this.showSidebar}/>
         <Router>
-          <Sidebar isShowedSidebar = {this.state.isShowedSidebar} isPageOnload = {this.state.isPageOnload} changeColor={this.changeColor}/>
+          <Sidebar {...this.state} changeColor={this.changeColor} />
           <Switch>
             <Route exact path="/" render={() => <MainPage mainPageOnload = {this.mainPageOnload} />} />
             <Route exact path="/registration" component={Registration} />
@@ -60,7 +64,8 @@ class App extends Component {
 }
 App.propTypes = {
   isShowedSidebar: PropTypes.bool,
-  isPageOnload: PropTypes.bool
+  isPageOnload: PropTypes.bool,
+  backgroundTheme: PropTypes.string
 }
 App.defaultProps = {
   isShowedSidebar: false,

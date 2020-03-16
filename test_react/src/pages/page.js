@@ -1,23 +1,32 @@
 import React, { Component } from 'react'
 import './page.css'
+const user = JSON.parse(localStorage.getItem('user'))
 
 export default class Page extends Component {
     constructor(props){
         super(props)
+        this.state = {
+            userFirstName: "",
+            userLastName: ""
+        }
         this.editName = this.editName.bind(this)
         this.onSubmit = this.onSubmit.bind(this)
     }
-    user = JSON.parse(localStorage.getItem('user'))
     editName = () => {
         this.refs.usernameEdit.className = "username-edit-hide"
         this.refs.usernameSave.className = "username-save-show"
     }
-    onSubmit = () => {
+    onSubmit = (e) => {
         this.refs.usernameEdit.className = "username-edit"
         this.refs.usernameSave.className = "username-save"
-        this.user.username = this.refs.inputUsername.value
-        this.user.lastname = this.refs.inputLastname.value
-        localStorage.setItem('user', JSON.stringify(this.user)) 
+        user.username = this.refs.inputUsername.value
+        user.lastname = this.refs.inputLastname.value
+        localStorage.setItem('user', JSON.stringify(user)) 
+        this.setState({userFirstName: this.refs.inputLastname.value, userLastName: this.refs.inputUsername.value})
+        e.preventDefault()
+    }
+    componentWillMount(){
+        this.setState({userFirstName: user.lastname, userLastName: user.username})
     }
     componentDidMount(){
         this.props.pageOnload()
@@ -29,18 +38,18 @@ export default class Page extends Component {
         return (
             <div className="page-main">
                 <div className="username-edit" ref="usernameEdit">
-                <p ref="userFullName">{this.user.username} {this.user.lastname}</p>
+                <p ref="userFullName">{this.state.userLastName} {this.state.userFirstName}</p>
                 <button className="button-edit-name" onClick={this.editName}>Редактировать</button>
             </div>
             <div className="username-save" ref="usernameSave">
                 <form onSubmit={this.onSubmit}>
-                    <input minLength="1" maxLength="15" className="inputs" ref="inputUsername" defaultValue={this.user.username} type="text" placeholder="Имя" autoComplete="off" required/>
-                    <input minLength="1" maxLength="15" className="inputs" ref="inputLastname" defaultValue={this.user.lastname} type="text" placeholder="Фамилия" autoComplete="off" required/>
+                    <input minLength="1" maxLength="15" className="inputs" ref="inputUsername" defaultValue={this.state.userLastName} type="text" placeholder="Имя" autoComplete="off" required/>
+                    <input minLength="1" maxLength="15" className="inputs" ref="inputLastname" defaultValue={this.state.userFirstName} type="text" placeholder="Фамилия" autoComplete="off" required/>
                     <input type="submit" className="button-edit-name" id="buttonSave" value="Сохранить"/>
                 </form>
             </div>
-            <p>Дата рождения: {this.user.bday} {this.user.bmonth} {this.user.byear}</p>
-            <p>Дней с момента регистрации: {getRegistrationDate(this.user.registrationDate)}</p>
+            <p>Дата рождения: {user.bday} {user.bmonth} {user.byear}</p>
+            <p>Дней с момента регистрации: {getRegistrationDate(user.registrationDate)}</p>
             </div>
         );
     } 

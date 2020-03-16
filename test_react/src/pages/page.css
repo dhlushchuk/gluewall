@@ -60,3 +60,14 @@
     -o-transform:translatey(2px); 
     transform: translatey(2px); 
 }
+@media all and (min-width: 481px) and (max-width:768px) {
+    .page-main {
+        max-width: 100%;
+    }
+}
+@media all and (max-width:480px) {
+    .page-main {
+        max-width: 100%;
+        align-items: stretch;
+    }
+}
