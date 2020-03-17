@@ -30,7 +30,7 @@ class App extends Component {
     localStorage.setItem('user', JSON.stringify(user))
   }
   componentWillMount() {
-    user.signIn === "true" ? this.setState({backgroundTheme: user.background}) : this.setState({backgroundTheme: ""})
+    this.setState({backgroundTheme: user.background})
   }
   componentDidMount(){
     background.style.backgroundColor = this.state.backgroundTheme
