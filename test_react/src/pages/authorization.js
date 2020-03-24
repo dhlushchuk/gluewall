@@ -1,19 +1,21 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { addUser } from '../redux/actions'
 import { withRouter } from 'react-router'
 import './authorization.css'
 
-const Authorization = (props) => {
+const Authorization = (props, {store}) => {
     let error
-    const user = JSON.parse(localStorage.getItem('user'))
+    const user = JSON.parse(localStorage.getItem('redux-store'))
     let userLog = {email: "", password: ""}
     const onChange = (e) => {
         let name = e.target.name
         userLog[name] = e.target.value
     }
     const onSubmit = (e) => {
-        if(userLog.email === user.email && userLog.password === user.password) {
-            user.signIn = "true"
-            localStorage.setItem('user', JSON.stringify(user))
+        if(userLog.email === user.userState.email && userLog.password === user.userState.password) {
+            user.userState.signIn = "true"
+            store.dispatch(addUser(user.userState))
             props.history.push(`/page`)
         }
         else {
@@ -33,6 +35,8 @@ const Authorization = (props) => {
         </div>
     );
 }
-
+Authorization.contextTypes = {
+    store: PropTypes.object
+}
 
 export default withRouter(Authorization)

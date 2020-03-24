@@ -1,56 +1,62 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react'
 import './page.css'
-const user = JSON.parse(localStorage.getItem('user'))
+import PropTypes from 'prop-types'
+import { addUser, userAuthorization, loadPage } from '../redux/actions'
 
-export default class Page extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            userFirstName: "",
-            userLastName: ""
-        }
-        this.editName = this.editName.bind(this)
-        this.onSubmit = this.onSubmit.bind(this)
+const user = JSON.parse(localStorage.getItem('redux-store'))
+const useBeforeFirstRender = (f) => {
+    const [hasRendered, setHasRendered] = useState(false)
+    useEffect(() => setHasRendered(true), [hasRendered])
+    if (!hasRendered) {
+      f()
     }
-    editName = () => {
-        this.refs.usernameEdit.className = "username-edit-hide"
-        this.refs.usernameSave.className = "username-save-show"
-    }
-    onSubmit = (e) => {
-        this.refs.usernameEdit.className = "username-edit"
-        this.refs.usernameSave.className = "username-save"
-        user.username = this.refs.inputUsername.value
-        user.lastname = this.refs.inputLastname.value
-        localStorage.setItem('user', JSON.stringify(user)) 
-        this.setState({userFirstName: this.refs.inputLastname.value, userLastName: this.refs.inputUsername.value})
-        e.preventDefault()
-    }
-    componentWillMount(){
-        this.setState({userFirstName: user.lastname, userLastName: user.username})
-    }
-    componentDidMount(){
-        this.props.pageOnload()
-    }
-    render(){
-        const getRegistrationDate = (date) => {
-            return (new Date().getDate()) - (new Date(date).getDate())
-        }
-        return (
-            <div className="page-main">
-                <div className="username-edit" ref="usernameEdit">
-                <p ref="userFullName">{this.state.userLastName} {this.state.userFirstName}</p>
-                <button className="button-edit-name" onClick={this.editName}>Редактировать</button>
-            </div>
-            <div className="username-save" ref="usernameSave">
-                <form onSubmit={this.onSubmit}>
-                    <input minLength="1" maxLength="15" className="inputs" ref="inputUsername" defaultValue={this.state.userLastName} type="text" placeholder="Имя" autoComplete="off" required/>
-                    <input minLength="1" maxLength="15" className="inputs" ref="inputLastname" defaultValue={this.state.userFirstName} type="text" placeholder="Фамилия" autoComplete="off" required/>
-                    <input type="submit" className="button-edit-name" id="buttonSave" value="Сохранить"/>
-                </form>
-            </div>
-            <p>Дата рождения: {user.bday} {user.bmonth} {user.byear}</p>
-            <p>Дней с момента регистрации: {getRegistrationDate(user.registrationDate)}</p>
-            </div>
-        );
-    } 
 }
+
+const Page = ({ store }) => {
+    useBeforeFirstRender(() => {
+        store.dispatch(userAuthorization({userFirstName: store.getState().userState.lastname, userLastName: store.getState().userState.username}))
+    })
+    const [pageState, setPageState] = useState(false)
+    useEffect(() => {
+        setPageState(true)
+        store.dispatch(loadPage(pageState))
+    },[pageState, store])
+    let usernameEdit, usernameSave, inputUsername, inputLastname
+    const getRegistrationDate = (date) => {
+        return (new Date().getDate()) - (new Date(date).getDate())
+    }
+    return (
+        <div className="page-main">
+            <div className="username-edit" ref={div => usernameEdit = div}>
+            <p>{store.getState().userLoginState.userLastName} {store.getState().userLoginState.userFirstName}</p>
+            <button className="button-edit-name" onClick={() => {
+                usernameEdit.className = "username-edit-hide"
+                usernameSave.className = "username-save-show"
+            }}>Редактировать</button>
+        </div>
+        <div className="username-save" ref={div => usernameSave = div}>
+            <form onSubmit={(e) => {
+                usernameEdit.className = "username-edit"
+                usernameSave.className = "username-save"
+                user.userState.username = inputUsername.value
+                user.userState.lastname = inputLastname.value
+                store.dispatch(addUser(user.userState))
+                store.dispatch(userAuthorization({userFirstName: inputLastname.value, userLastName: inputUsername.value}))
+                e.preventDefault()
+            }}>
+                <input minLength="1" maxLength="15" className="inputs" ref={input => inputUsername = input} defaultValue={store.getState().userLoginState.userLastName} type="text" placeholder="Имя" autoComplete="off" required/>
+                <input minLength="1" maxLength="15" className="inputs" ref={input => inputLastname = input} defaultValue={store.getState().userLoginState.userFirstName} type="text" placeholder="Фамилия" autoComplete="off" required/>
+                    <input type="submit" className="button-edit-name" id="buttonSave" value="Сохранить"/>
+            </form>
+        </div>
+        <p>Дата рождения: {store.getState().userState.bday} {store.getState().userState.bmonth} {store.getState().userState.byear}</p>
+        <p>Дней с момента регистрации: {getRegistrationDate(store.getState().userState.registrationDate)}</p>
+        </div>
+    );
+}
+
+Page.contextTypes = {
+    store: PropTypes.object
+}
+
+export default Page
